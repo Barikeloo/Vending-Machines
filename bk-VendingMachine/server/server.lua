@@ -13,12 +13,16 @@ RegisterNetEvent('bk-vending:buy', function(item, price, amount)
     local price = price
     local item = item
     local xItem = xPlayer.getInventoryItem(item)
-    if xPlayer.getMoney() >= price then
-        xPlayer.removeMoney(price)
-        xPlayer.addInventoryItem(item, amount)
-        SendLog('Nueva compra detectada', 'Identificador : '.. xPlayer.identifier .. '\n Nombre del jugador : ' ..xPlayer.name.. '\n Alerta : ha comprado ' .. amount .. ' de ' .. xItem.name .. ' por ' .. price .. '$')
-    else
-        print('No tienes dinero suficiente')
+    if xItem.count <= amount then 
+        print('No puedes llevar mas de : ' ..xItem.name..'')
+    else 
+        if xPlayer.getMoney() >= price then
+            xPlayer.removeMoney(price)
+            xPlayer.addInventoryItem(item, amount)
+            SendLog('Nueva compra detectada', 'Identificador : '.. xPlayer.identifier .. '\n Nombre del jugador : ' ..xPlayer.name.. '\n Alerta : ha comprado ' .. amount .. ' de ' .. xItem.name .. ' por ' .. price .. '$')
+        else
+            print('No tienes dinero suficiente')
+        end
     end
 end)
 
